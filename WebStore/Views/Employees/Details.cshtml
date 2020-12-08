@@ -1,0 +1,39 @@
+﻿@model Employee
+
+
+<div class="container">
+    <h3>Карточка сотрудника</h3>
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>@Model.Id</dd>
+
+        <dt>Фамилия</dt>
+        <dd>@Model.LastName</dd>
+
+        <dt>Имя</dt>
+        <dd>@Model.FirstName</dd>
+
+        <dt>Отчество</dt>
+        <dd>@Model.Patronymic</dd>
+
+        <dt>Возраст</dt>
+        <dd>@Model.Age</dd>
+
+        <dt>Телефон</dt>
+        <dd>@Model.Phone</dd>
+
+        <dt>Город</dt>
+        <dd>@Model.City</dd>
+
+        <dt>Должность</dt>
+        <dd>@Model.Position</dd>
+
+        <dt>Дата трудоустройства</dt>
+        <dd>@Model.EmploymentDate.ToString("dd.MM.yyyy")</dd>
+    </dl>
+
+    <hr />
+
+    <a asp-action="Index" class="btn btn-default">К списку</a>
+</div>>
+    
