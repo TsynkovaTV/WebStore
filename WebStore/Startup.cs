@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,7 +19,9 @@ namespace WebStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddSingleton<IProductData, InDbProductData>();
+            services.AddSingleton<ICartData, InDbCartData>();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,6 +30,7 @@ namespace WebStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseBrowserLink();
             }
 
             app.UseStaticFiles();

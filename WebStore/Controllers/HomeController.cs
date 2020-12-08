@@ -1,16 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 using WebStore.Data;
+using WebStore.Infrastructure.Interfaces;
+using WebStore.ViewModels;
 
 namespace WebStore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IConfiguration _Configuration;       
+        private readonly IConfiguration _Configuration;
+        private readonly ICartData _CartData;
 
-        public HomeController(IConfiguration configuration) 
+        public HomeController(IConfiguration Configuration, ICartData CartData) 
         {
-            _Configuration = configuration;
+            _Configuration = Configuration;
+            _CartData = CartData;
         }
 
         public IActionResult Index() => View();
@@ -25,9 +30,57 @@ namespace WebStore.Controllers
 
         public IActionResult BlogSingle() => View();
 
-        public IActionResult Cart() => View(TestData.CartProducts);
+        public IActionResult Cart()
+        {
+            var cartProducts = _CartData.GetCartProducts();
 
-        public IActionResult Checkout() => View(TestData.CartProducts);
+            return View(new CartViewModel
+            {
+                    Products = cartProducts                   
+                   .Select(cp => new CartProductViewModel
+                   {
+                       Id = cp.Id,
+                       ProductCount = cp.ProductCount,
+                       Product = TestData.Products
+                            .Where(p => p.Id == cp.ProductId)
+                            .Select(p => new ProductViewModel
+                            { 
+                                Id = p.Id,
+                                Name = p.Name,
+                                ImageUrl = p.ImageUrl,
+                                Price = p.Price,
+                            })
+                            .FirstOrDefault(),                       
+                   })                       
+            });
+        }
+
+        public IActionResult Checkout()
+        {
+            {
+                var cartProducts = _CartData.GetCartProducts();
+
+                return View(new CartViewModel
+                {
+                    Products = cartProducts
+                       .Select(cp => new CartProductViewModel
+                       {
+                           Id = cp.Id,
+                           ProductCount = cp.ProductCount,
+                           Product = TestData.Products
+                                .Where(p => p.Id == cp.ProductId)
+                                .Select(p => new ProductViewModel
+                                {
+                                    Id = p.Id,
+                                    Name = p.Name,
+                                    ImageUrl = p.ImageUrl,
+                                    Price = p.Price,
+                                })
+                                .FirstOrDefault(),
+                       })
+                });
+            }
+        }
 
         public IActionResult ContactUs() => View();
 

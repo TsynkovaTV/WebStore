@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CartProduct>
+﻿@model CartViewModel
 
 <div class="review-payment">
     <h2>Review & Payment</h2>
@@ -18,9 +18,10 @@
         </thead>
         <tbody>
 
-            @foreach (var product in Model)
+            @foreach (var product in Model.Products)
             {
-                <partial name="Partial/_CartItem" model="product" />            
+                <partial name="Partial/_CartItem" model="product" />
+
             }
             <tr>
                 <td colspan="4">&nbsp;</td>

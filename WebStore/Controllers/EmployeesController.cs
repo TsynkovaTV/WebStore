@@ -32,7 +32,7 @@ namespace WebStore.Controllers
         }
 
         //[Route("create")]
-        public IActionResult Create() => View("Edit", new EmployeesViewModel());
+        public IActionResult Create() => View("Edit", new EmployeesViewModel { EmploymentDate = DateTime.Today });
 
         //[Route("edit")]
         public IActionResult Edit(int? id)
@@ -65,6 +65,14 @@ namespace WebStore.Controllers
        // [Route("edit")]
         public IActionResult Edit(EmployeesViewModel Model)
         {
+            if (Model.LastName == "Иванов" && Model.Name == "Фёдор" && Model.MiddleName == "Петрович")
+                ModelState.AddModelError("", "Подозрительная личность");
+            
+            if (Model.Age == 25)
+                ModelState.AddModelError("Age", "Возраст не должен быть равен 25");
+           
+            if (!ModelState.IsValid) return View(Model);
+            
             if (Model is null)
                 throw new ArgumentNullException(nameof(Model));
 
