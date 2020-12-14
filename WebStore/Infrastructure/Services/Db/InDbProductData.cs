@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
-using WebStore.Data;
-using WebStore.Db;
+using WebStore.DAL.Context;
 using WebStore.Domain;
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
@@ -10,29 +10,25 @@ namespace WebStore.Infrastructure.Services
 {
     public class InDbProductData : IProductData
     {
+        private readonly WebStoreDbContext _db;
+
+        public InDbProductData(WebStoreDbContext db)
+        {
+            _db = db;
+        }
         public IEnumerable<Brand> GetBrands()
         {
-            using (WebStoreDbContext db = new WebStoreDbContext())
-            {
-                return db.Brands.ToList();
-            }
-
+            return _db.Brands.Include(brand => brand.Products);        
         }
 
         public IEnumerable<Section> GetSections()
-        {
-            using (WebStoreDbContext db = new WebStoreDbContext())
-            {
-                return db.Sections.ToList();
-            }
-
+        {            
+                return _db.Sections.Include(section => section.Products); 
         }
 
         public IEnumerable<Product> GetProducts(ProductFilter Filter = null)
         {
-            using (WebStoreDbContext db = new WebStoreDbContext())
-            {
-                var query = TestData.Products;
+                IQueryable<Product> query = _db.Products;
 
                 if (Filter?.SectionId is { } section_id) // сопоставление с образцом
                     query = query.Where(product => product.SectionId == section_id);
@@ -40,8 +36,7 @@ namespace WebStore.Infrastructure.Services
                 if (Filter?.BrandId != null)
                     query = query.Where(product => product.BrandId == Filter.BrandId);
 
-                return query.ToList();
-            }
+                return query;            
         }
     }
 }
