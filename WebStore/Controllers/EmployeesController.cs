@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebStore.Data;
+using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 using WebStore.ViewModels;
@@ -10,6 +12,7 @@ using WebStore.ViewModels;
 namespace WebStore.Controllers
 {
     //[Route("users")]
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly IEmployeesData _Employees;
@@ -32,9 +35,11 @@ namespace WebStore.Controllers
         }
 
         //[Route("create")]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Create() => View("Edit", new EmployeesViewModel { EmploymentDate = DateTime.Today });
 
         //[Route("edit")]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(int? id)
         {
             if (id is null)
@@ -62,7 +67,8 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-       // [Route("edit")]
+        // [Route("edit")]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(EmployeesViewModel Model)
         {
             if (Model.LastName == "Иванов" && Model.Name == "Фёдор" && Model.MiddleName == "Петрович")
@@ -98,6 +104,7 @@ namespace WebStore.Controllers
         }
 
         //[Route("delete")]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Delete(int id)
         {
             if (id <= 0)
@@ -122,7 +129,8 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-       // [Route("deleteConfirmed")]
+        // [Route("deleteConfirmed")]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult DeleteConfirmed(int id)
         {
             _Employees.Delete(id);
