@@ -10,9 +10,9 @@ namespace WebStore.Controllers
     public class HomeController : Controller
     {
         private readonly IConfiguration _Configuration;
-        private readonly ICartData _CartData;
+        private readonly ICartService _CartData;
 
-        public HomeController(IConfiguration Configuration, ICartData CartData) 
+        public HomeController(IConfiguration Configuration, ICartService CartData) 
         {
             _Configuration = Configuration;
             _CartData = CartData;
@@ -30,7 +30,7 @@ namespace WebStore.Controllers
 
         public IActionResult BlogSingle() => View();
 
-        public IActionResult Cart()
+       /* public IActionResult Cart()
         {
             var cartProducts = _CartData.GetCartProducts();
 
@@ -80,7 +80,7 @@ namespace WebStore.Controllers
                        })
                 });
             }
-        }
+        }*/
 
         public IActionResult ContactUs() => View();
 

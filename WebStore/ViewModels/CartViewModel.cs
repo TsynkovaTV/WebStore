@@ -7,6 +7,10 @@ namespace WebStore.ViewModels
 {
     public class CartViewModel
     {
-        public IEnumerable<CartProductViewModel> Products {get; set;}
+        public IEnumerable<(ProductViewModel Product, int Count)> Products { get; set; }
+
+        public int ProductsCount => Products?.Sum(p => p.Count) ?? 0;
+
+        public decimal TotalPrice => Products?.Sum(p => p.Product.Price * p.Count) ?? 0m;
     }
 }

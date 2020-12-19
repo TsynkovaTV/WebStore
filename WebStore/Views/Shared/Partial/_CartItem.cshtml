@@ -1,0 +1,27 @@
+﻿@model (ProductViewModel Product, int ProductCount)
+
+<tr>
+    <td class="cart_product">
+        <a href=""><img src="~/images/shop/@Model.Product.ImageUrl" alt=""></a>
+    </td>
+    <td class="cart_description">
+        <h4><a href="">@Model.Product.Name</a></h4>
+        <p>@Model.Product.WebId.ToString("00000000")</p>
+    </td>
+    <td class="cart_price">
+        <p>@Model.Product.Price.ToString("C")</p>
+    </td>
+    <td class="cart_quantity">
+        <div class="cart_quantity_button">
+            <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Product.Id" class="cart_quantity_up"> + </a>
+            <input class="cart_quantity_input" type="text" name="quantity" value=@Model.ProductCount autocomplete="off" size="2">
+            <a asp-controller="Cart" asp-action="DecrementFromCart" asp-route-id="@Model.Product.Id" class="cart_quantity_down"> - </a>
+        </div>
+    </td>
+    <td class="cart_total">
+        <p class="cart_total_price">@((Model.Product.Price * Model.ProductCount).ToString("C"))</p>
+    </td>
+    <td class="cart_delete">
+        <a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@Model.Product.Id" class="cart_quantity_delete"><i class="fa fa-times"></i></a>
+    </td>
+</tr>

@@ -9,10 +9,12 @@ using WebStore.DAL.Context;
 using WebStore.Data;
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
+using WebStore.ViewModels;
 
 namespace WebStore.Infrastructure.Services
 {
-    public class InDbCartData : ICartData
+    [Obsolete("Корзина хранится не в БД, а в cookies")]
+    public class InDbCartData : ICartService
     {
         private readonly WebStoreDbContext _db;
 
@@ -20,11 +22,37 @@ namespace WebStore.Infrastructure.Services
         {
             _db = db;
         }
+
+        public void AddToCart(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DecrementFromCart(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<CartProduct> GetCartProducts()
         {
             
             return _db.CartProducts.ToList();
                           
+        }
+
+        public void RemoveFromCart(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CartViewModel TransformFromCart()
+        {
+            throw new NotImplementedException();
         }
     }
 }

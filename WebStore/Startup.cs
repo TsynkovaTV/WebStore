@@ -11,6 +11,7 @@ using WebStore.Data;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Services;
+using WebStore.Infrastructure.Services.InCookies;
 
 namespace WebStore
 {
@@ -26,7 +27,7 @@ namespace WebStore
         {
             services.AddDbContext<WebStoreDbContext>(opt => opt.UseSqlServer(_Configuration.GetConnectionString("Default")));
             services.AddTransient<WebStoreDbInitializer>();
-
+            
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<WebStoreDbContext>()
                 .AddDefaultTokenProviders();
@@ -64,8 +65,8 @@ namespace WebStore
             });
 
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();            
-            services.AddTransient<IProductData, InDbProductData>();
-            services.AddTransient<ICartData, InDbCartData>();
+            services.AddScoped<IProductData, InDbProductData>();
+            services.AddScoped<ICartService, InCookiesCartService>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();            
         }
 
@@ -89,9 +90,14 @@ namespace WebStore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+                    pattern: "{controller=Home}/{action=Index}/{id?}");               
+            });          
+            
         }
     }
 }
