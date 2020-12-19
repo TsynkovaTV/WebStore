@@ -14,7 +14,7 @@ namespace WebStore.Models
         public string LastName { get; set; }
 
         /// <summary>Отчество</summary>
-        public string Patronymic { get; set; }
+        public string MiddleName { get; set; }
 
         /// <summary>Возраст</summary>
         public int Age { get; set; }

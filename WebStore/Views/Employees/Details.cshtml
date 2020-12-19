@@ -14,7 +14,7 @@
         <dd>@Model.FirstName</dd>
 
         <dt>Отчество</dt>
-        <dd>@Model.Patronymic</dd>
+        <dd>@Model.MiddleName</dd>
 
         <dt>Возраст</dt>
         <dd>@Model.Age</dd>
@@ -34,6 +34,12 @@
 
     <hr />
 
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">
+        <i class="fa fa-edit"></i> Редактировать
+    </a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+        <i class="fa fa-trash-o"></i> Удалить
+    </a>
     <a asp-action="Index" class="btn btn-default">К списку</a>
 </div>>
     
