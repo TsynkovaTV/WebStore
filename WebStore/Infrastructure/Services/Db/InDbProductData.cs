@@ -33,7 +33,8 @@ namespace WebStore.Infrastructure.Services
             IQueryable<Product> query = _db.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Section)
-                .Include(p => p.Image);
+                .Include(p => p.Image)
+                .OrderBy(p => p.Order);
 
             if (Filter?.Ids?.Length > 0)
             {
@@ -47,10 +48,7 @@ namespace WebStore.Infrastructure.Services
                 if (Filter?.BrandId != null)
                     query = query.Where(product => product.BrandId == Filter.BrandId);
             }
-
-                
-
-                return query;            
+            return query;            
         }
               
         public Section GetSectionById(int id)
@@ -78,6 +76,28 @@ namespace WebStore.Infrastructure.Services
                     .Include(p => p.Section)
                     .Include(p => p.Image)
                     .FirstOrDefault(p => p.Id == id);
+        }
+
+        public async Task AddProduct(Product product, Image image)
+        {
+            await using var transaction = await _db.Database.BeginTransactionAsync();
+
+            if (image is not null)
+            {
+                await _db.Images.AddAsync(image);
+
+                await _db.SaveChangesAsync();
+
+                product.ImageId = image.Id;
+            }            
+
+            await _db.Products.AddAsync(product);
+
+            await _db.SaveChangesAsync();
+
+            await transaction.CommitAsync();
+
+            return;
         }
 
         public async Task EditProduct(Product product)

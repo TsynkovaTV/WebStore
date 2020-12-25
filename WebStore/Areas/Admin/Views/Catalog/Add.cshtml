@@ -1,34 +1,21 @@
 ﻿@model WebStore.Domain.Entities.Product
 
 @{
-    ViewData["Title"] = "Редактирование товара";
+    ViewData["Title"] = "Добавить товар";
 }
 
-<h1>Редактировать товар</h1>
+<h1>Добавить товар</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <div class="form-group">
-            <img src="~/images/shop/@Model.Image.Url" alt="@Model.Image.Url" width="400" />
-            <span asp-validation-for="ImageId" class="text-danger"></span>
-        </div>
-
-        <form asp-action="AddFile" asp-controller="Catalog" method="post" enctype="multipart/form-data" asp-route-id="@Model">
-            <label class="control-label">Заменить изображение</label>
-            <input asp-for="Id" name="productId" hidden="hidden" />
-            <input type="file" name="uploadedFile" />
-            <input type="submit" class="btn btn-primary" value="Загрузить" />
-        </form>
-        <br />
-
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Add" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <br />
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" disabled="disabled" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+                <label asp-for="Image" class="control-label"></label>
+                <input type="file" name="uploadedFile" />                
+            </div>            
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -59,13 +46,12 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input asp-for="ImageId" hidden="hidden" />
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
+
     </div>
 </div>
 

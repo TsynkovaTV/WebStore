@@ -19,6 +19,8 @@ namespace WebStore.Infrastructure.Interfaces
 
         Product GetProductById(int id);
 
+        Task AddProduct(Product product, Image image);
+
         Task EditProduct(Product product);
 
         Task DeleteProduct(int id);

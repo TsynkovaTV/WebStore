@@ -2,12 +2,15 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
-
+using WebStore.Models;
+using WebStore.ViewModels;
 
 namespace WebStore.Areas.Admin.Controllers
 {
@@ -23,11 +26,50 @@ namespace WebStore.Areas.Admin.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            return View(_ProductData.GetProducts());
+            int pageSize = 5;   // количество элементов на странице
+
+            IEnumerable<Product> source = _ProductData.GetProducts();
+            var count = source.Count();
+            var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            AdminCatalogViewModel viewModel = new AdminCatalogViewModel
+            {
+                PageViewModel = pageViewModel,
+                Products = items
+            };
+            return View(viewModel);
         }
 
+        public IActionResult Add()
+        {
+            return View("Add", new Product());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(IFormFile uploadedFile, Product product)
+        {
+            Image image = new Image();
+            if (uploadedFile != null)
+            {
+                // путь к папке Files
+                string path = "/images/shop/" + uploadedFile.FileName;
+                // сохраняем файл в папку Files в каталоге wwwroot
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                // Image image = new Image { Name = uploadedFile.FileName, Url = uploadedFile.FileName };
+                image.Name = uploadedFile.FileName;
+                image.Url = uploadedFile.FileName;                
+            }
+
+            await _ProductData.AddProduct(product, image);
+
+            return RedirectToAction(nameof(Index));
+        }
 
         public IActionResult Edit(int id)
         {
