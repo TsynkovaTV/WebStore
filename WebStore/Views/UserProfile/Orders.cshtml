@@ -1,0 +1,40 @@
+﻿@model IEnumerable<UserOrderViewModel>
+
+@{
+    Layout = "_UserProfileLayout";
+    ViewData["Title"] = "Заказы";
+}
+
+@if (Model is null || !Model.Any())
+{
+    <p>Вы ещё не сделали ни одного заказа</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Имя</th>
+                <th>Адрес</th>
+                <th>Телефон</th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{var i = 1; }
+            @foreach (var (_, Name, Address, Phone, TotalSum) in Model)
+            {
+                <tr>
+                    <td>@(i++)</td>
+                    <td>@Name</td>
+                    <td>@Address</td>
+                    <td>@Phone</td>
+                    <td>@TotalSum</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+

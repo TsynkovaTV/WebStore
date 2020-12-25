@@ -1,15 +1,18 @@
-﻿@model CartViewModel
-@{ 
+﻿@model CartOrderViewModel
+@{
     ViewData["Title"] = "Корзина";
 }
 
-<partial name="Partial/_CartItems" model='Model' />
-
-<partial name="Partial/_DoAction" model='Model' />
+<partial name="Partial/_CartItems" model="Model.Cart" />
 
 
-
-
-
-
-
+<section id="do_action">
+    <div class="container">
+        <div class="heading">
+            <h3>What would you like to do next?</h3>
+            <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+        </div>
+        <partial name="Partial/_CheckOut" model="Model.Order"
+                 view-data="@(new ViewDataDictionary(ViewData) { { "TotalPrice", Model.Cart.TotalPrice } })" />
+    </div>
+</section><!--/#do_action-->

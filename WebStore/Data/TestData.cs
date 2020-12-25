@@ -114,20 +114,38 @@ namespace WebStore.Data
             new Brand { Id = 7, Name = "Rosch creative culture", Order = 6 },
         };
 
+        public static IEnumerable<Image> Images { get; } = new[]
+       {
+            new Image { Id = 1, Url = "product1.jpg", Name = "product1.jpg" },
+            new Image { Id = 2, Url = "product2.jpg", Name = "product2.jpg" },
+            new Image { Id = 3, Url = "product3.jpg", Name = "product3.jpg" },
+            new Image { Id = 4, Url = "product4.jpg", Name = "product4.jpg" },
+            new Image { Id = 5, Url = "product5.jpg", Name = "product5.jpg" },
+            new Image { Id = 6, Url = "product6.jpg", Name = "product6.jpg" },
+            new Image { Id = 7, Url = "product7.jpg", Name = "product7.jpg" },
+            new Image { Id = 8, Url = "product8.jpg", Name = "product8.jpg" },
+            new Image { Id = 9, Url = "product9.jpg", Name = "product9.jpg" },
+            new Image { Id = 10, Url = "product10.jpg", Name = "product10.jpg" },
+            new Image { Id = 11, Url = "product11.jpg", Name = "product11.jpg" },
+            new Image { Id = 12, Url = "product12.jpg", Name = "product12.jpg" },
+        };
+
         public static IEnumerable<Product> Products { get; } = new[]
         {
-            new Product { Id = 1, Name = "Белое платье", Price = 1025, ImageUrl = "product1.jpg", Order = 0, SectionId = 2, BrandId = 1, WebId = 0000111 },
-            new Product { Id = 2, Name = "Розовое платье", Price = 1025, ImageUrl = "product2.jpg", Order = 1, SectionId = 2, BrandId = 1, WebId = 0000112 },
-            new Product { Id = 3, Name = "Красное платье", Price = 1025, ImageUrl = "product3.jpg", Order = 2, SectionId = 2, BrandId = 1, WebId = 0000113 },
-            new Product { Id = 4, Name = "Джинсы", Price = 1025, ImageUrl = "product4.jpg", Order = 3, SectionId = 2, BrandId = 1, WebId = 0000114 },
-            new Product { Id = 5, Name = "Лёгкая майка", Price = 1025, ImageUrl = "product5.jpg", Order = 4, SectionId = 2, BrandId = 2, WebId = 0000115 },
-            new Product { Id = 6, Name = "Лёгкое голубое поло", Price = 1025, ImageUrl = "product6.jpg", Order = 5, SectionId = 2, BrandId = 1, WebId = 0000116 },
-            new Product { Id = 7, Name = "Платье белое", Price = 1025, ImageUrl = "product7.jpg", Order = 6, SectionId = 2, BrandId = 1, WebId = 0000117 },
-            new Product { Id = 8, Name = "Костюм кролика", Price = 1025, ImageUrl = "product8.jpg", Order = 7, SectionId = 25, BrandId = 1, WebId = 0000118 },
-            new Product { Id = 9, Name = "Красное китайское платье", Price = 1025, ImageUrl = "product9.jpg", Order = 8, SectionId = 25, BrandId = 1, WebId = 0000119 },
-            new Product { Id = 10, Name = "Женские джинсы", Price = 1025, ImageUrl = "product10.jpg", Order = 9, SectionId = 25, BrandId = 3, WebId = 0000120 },
-            new Product { Id = 11, Name = "Джинсы женские", Price = 1025, ImageUrl = "product11.jpg", Order = 10, SectionId = 25, BrandId = 3, WebId = 0000121 },
-            new Product { Id = 12, Name = "Летний костюм", Price = 1025, ImageUrl = "product12.jpg", Order = 11, SectionId = 25, BrandId = 3, WebId = 0000122 },
+            new Product { Id = 1, Name = "Белое платье", Price = 1025, ImageId = 1, Order = 0, SectionId = 2, BrandId = 1, WebId = 0000111 },
+            new Product { Id = 2, Name = "Розовое платье", Price = 1025, ImageId = 2, Order = 1, SectionId = 2, BrandId = 1, WebId = 0000112 },
+            new Product { Id = 3, Name = "Красное платье", Price = 1025, ImageId = 3, Order = 2, SectionId = 2, BrandId = 1, WebId = 0000113 },
+            new Product { Id = 4, Name = "Джинсы", Price = 1025, ImageId = 4, Order = 3, SectionId = 2, BrandId = 1, WebId = 0000114 },
+            new Product { Id = 5, Name = "Лёгкая майка", Price = 1025, ImageId = 5, Order = 4, SectionId = 2, BrandId = 2, WebId = 0000115 },
+            new Product { Id = 6, Name = "Лёгкое голубое поло", Price = 1025, ImageId = 6, Order = 5, SectionId = 2, BrandId = 1, WebId = 0000116 },
+            new Product { Id = 7, Name = "Платье белое", Price = 1025, ImageId = 7, Order = 6, SectionId = 2, BrandId = 1, WebId = 0000117 },
+            new Product { Id = 8, Name = "Костюм кролика", Price = 1025, ImageId = 8, Order = 7, SectionId = 25, BrandId = 1, WebId = 0000118 },
+            new Product { Id = 9, Name = "Красное китайское платье", Price = 1025, ImageId = 9, Order = 8, SectionId = 25, BrandId = 1, WebId = 0000119 },
+            new Product { Id = 10, Name = "Женские джинсы", Price = 1025, ImageId = 10, Order = 9, SectionId = 25, BrandId = 3, WebId = 0000120 },
+            new Product { Id = 11, Name = "Джинсы женские", Price = 1025, ImageId = 11, Order = 10, SectionId = 25, BrandId = 3, WebId = 0000121 },
+            new Product { Id = 12, Name = "Летний костюм", Price = 1025, ImageId = 12, Order = 11, SectionId = 25, BrandId = 3, WebId = 0000122 },
         };
+
+       
     }
 }

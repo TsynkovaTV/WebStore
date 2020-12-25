@@ -9,6 +9,7 @@ using WebStore.ViewModels;
 
 namespace WebStore.Infrastructure.Services
 {
+    [Obsolete("Корзина хранится в cookies. Пользуйтесь InCookiesCartService")]
     public class InMemoryCartData : ICartService
     {
         public void AddToCart(int id)

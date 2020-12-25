@@ -15,18 +15,29 @@ namespace WebStore.Domain.Entities
         [Required(ErrorMessage = "Не указан идентификатор секции")]
         public int SectionId { get; set; }
 
+        [Display(Name = "Секция")]
         [ForeignKey(nameof(SectionId))]
         public Section Section { get; set; }
 
         [Display(Name = "Бренд")]
         public int? BrandId { get; set; }
 
+        [Display(Name = "Бренд")]
         [ForeignKey(nameof(BrandId))]
         public Brand Brand { get; set; }
 
+        /*
+         [Display(Name = "Фото товара")]
+         [Required(ErrorMessage = "Не указано имя файла с фотографией товара")]
+         public string ImageUrl { get; set; }
+        */
+
         [Display(Name = "Фото товара")]
-        [Required(ErrorMessage = "Не указано имя файла с фотографией товара")]
-        public string ImageUrl { get; set; }
+        public int? ImageId { get; set; }
+
+        [Display(Name = "Фото товара")]
+        [ForeignKey(nameof(ImageId))]
+        public Image Image { get; set; }
 
         [Display(Name = "Цена")]
         [Required(ErrorMessage = "Не указана цена")]

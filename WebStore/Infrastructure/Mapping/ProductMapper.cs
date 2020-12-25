@@ -14,7 +14,7 @@ namespace WebStore.Infrastructure.Mapping
             Id = p.Id,
             Name = p.Name,
             Price = p.Price,
-            ImageUrl = p.ImageUrl,
+            ImageUrl = p.Image.Name,
             Brand = p.Brand?.Name,
             WebId = p.WebId,
         };

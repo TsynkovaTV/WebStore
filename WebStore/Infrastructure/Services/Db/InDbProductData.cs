@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,10 @@ namespace WebStore.Infrastructure.Services
 
         public IEnumerable<Product> GetProducts(ProductFilter Filter = null)
         {
-            IQueryable<Product> query = _db.Products;
+            IQueryable<Product> query = _db.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Section)
+                .Include(p => p.Image);
 
             if (Filter?.Ids?.Length > 0)
             {
@@ -72,6 +76,7 @@ namespace WebStore.Infrastructure.Services
             return _db.Products
                     .Include(p => p.Brand)
                     .Include(p => p.Section)
+                    .Include(p => p.Image)
                     .FirstOrDefault(p => p.Id == id);
         }
 
@@ -83,7 +88,7 @@ namespace WebStore.Infrastructure.Services
             dbProduct.Order = product.Order;
             dbProduct.BrandId = product.BrandId;
             dbProduct.SectionId = product.SectionId;
-            dbProduct.ImageUrl = product.ImageUrl;
+            dbProduct.ImageId = product.ImageId;
             dbProduct.Price = product.Price;
             dbProduct.WebId = product.WebId;
 
@@ -99,6 +104,30 @@ namespace WebStore.Infrastructure.Services
 
             _db.Products.Remove(dbProduct);
             await _db.SaveChangesAsync();
+
+            return;
+        }
+
+        public async Task AddImage(Image image, int productId)
+        {
+            Product dbProduct = GetProductById(productId);
+
+            if (dbProduct is null)
+            {
+                throw new InvalidOperationException("Товар не найден");
+            }
+            
+            await using var transaction = await _db.Database.BeginTransactionAsync();
+
+            await _db.Images.AddAsync(image);
+
+            await _db.SaveChangesAsync();
+
+            dbProduct.ImageId = image.Id;
+
+            await _db.SaveChangesAsync();
+
+            await transaction.CommitAsync();
 
             return;
         }

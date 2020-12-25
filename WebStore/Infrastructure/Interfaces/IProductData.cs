@@ -22,5 +22,7 @@ namespace WebStore.Infrastructure.Interfaces
         Task EditProduct(Product product);
 
         Task DeleteProduct(int id);
+
+        Task AddImage(Image image, int productId);
     }
 }

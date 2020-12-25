@@ -96,6 +96,18 @@ namespace WebStore.Data
                 _db.Database.CommitTransaction();
             }
 
+            _Logger.LogInformation("Добавление картинок...");
+            using (_db.Database.BeginTransaction())
+            {
+                _db.Images.AddRange(TestData.Images);
+
+                _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Images] ON");
+                _db.SaveChanges();
+                _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Images] OFF");
+
+                _db.Database.CommitTransaction();
+            }
+
             _Logger.LogInformation("Добавление товаров...");
             using (_db.Database.BeginTransaction())
             {

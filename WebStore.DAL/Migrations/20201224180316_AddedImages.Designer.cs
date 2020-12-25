@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebStore.DAL.Context;
 
 namespace WebStore.DAL.Migrations
 {
     [DbContext(typeof(WebStoreDbContext))]
-    partial class WebStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201224180316_AddedImages")]
+    partial class AddedImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,9 +371,7 @@ namespace WebStore.DAL.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique()
-                        .HasFilter("[ImageId] IS NOT NULL");
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("SectionId");
 
@@ -486,8 +486,8 @@ namespace WebStore.DAL.Migrations
                         .HasForeignKey("BrandId");
 
                     b.HasOne("WebStore.Domain.Entities.Image", "Image")
-                        .WithOne("Product")
-                        .HasForeignKey("WebStore.Domain.Entities.Product", "ImageId");
+                        .WithMany()
+                        .HasForeignKey("ImageId");
 
                     b.HasOne("WebStore.Domain.Entities.Section", "Section")
                         .WithMany("Products")
@@ -514,11 +514,6 @@ namespace WebStore.DAL.Migrations
             modelBuilder.Entity("WebStore.Domain.Entities.Brand", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("WebStore.Domain.Entities.Image", b =>
-                {
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("WebStore.Domain.Entities.Order.Order", b =>

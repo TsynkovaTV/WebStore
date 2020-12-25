@@ -4,14 +4,36 @@
     ViewData["Title"] = "Редактирование товара";
 }
 
-<h1>Редактировать</h1>
+<h1>Редактировать товар</h1>
 
-<h4>Товар</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <div class="form-group">
+            <img src="~/images/shop/@Model.Image.Url" alt="@Model.Image.Url" width="400" />
+            <span asp-validation-for="ImageId" class="text-danger"></span>
+        </div>
+
+        <form asp-action="AddFile" asp-controller="Catalog" method="post" enctype="multipart/form-data" asp-route-id="@Model">
+            <label class="control-label">Заменить изображение</label>
+            <input asp-for="Id" name="productId" hidden="hidden" />
+            <input type="file" name="uploadedFile" />
+            <input type="submit" class="btn btn-primary" value="Загрузить" />
+        </form>
+        <br />
+
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" disabled="disabled" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Order" class="control-label"></label>
                 <input asp-for="Order" class="form-control" />
@@ -28,14 +50,9 @@
                 <span asp-validation-for="BrandId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                <label asp-for="WebId" class="control-label"></label>
+                <input asp-for="WebId" class="form-control" />
+                <span asp-validation-for="WebId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -43,14 +60,14 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+                <input asp-for="ImageId" hidden="hidden" />
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
+
     </div>
 </div>
 

@@ -54,5 +54,10 @@ namespace WebStore.Infrastructure.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task AddImage(Image image, int productId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

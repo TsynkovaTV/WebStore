@@ -20,16 +20,19 @@
                 @Html.DisplayNameFor(model => model.Order)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SectionId)
+                @Html.DisplayNameFor(model => model.Section)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BrandId)
+                @Html.DisplayNameFor(model => model.Brand)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
+                @Html.DisplayNameFor(model => model.Image.Url)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WebId)
             </th>
             <th></th>
         </tr>
@@ -37,34 +40,42 @@
     <tbody>
         @foreach (var product in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(p => product.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(p => product.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(p => product.Order)
-                </td>
-                <td>
-                    @Html.DisplayFor(p => product.SectionId)
-                </td>
-                <td>
-                    @Html.DisplayFor(p => product.BrandId)
-                </td>
-                <td>
-                    @Html.DisplayFor(p => product.ImageUrl)
-                </td>
-                <td>
-                    @Html.DisplayFor(p => product.Price)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=product.Id }) |
-                    @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
-                    @Html.ActionLink("Delete", "Delete", new { id = product.Id })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(p => product.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(p => product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(p => product.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(p => product.Section.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(p => product.Brand.Name)
+            </td>
+            <td>
+                <img src="~/images/shop/@product.Image.Url" width="50" alt="@product.Name" />
+            </td>
+            <td>
+                @Html.DisplayFor(p => product.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(p => product.WebId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@product.Id">
+                   <i class="glyphicon glyphicon-edit"></i>Редактировать
+                </a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@product.Id" class="text-danger">
+                    <i class="glyphicon glyphicon-remove"></i>Удалить
+                </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -14,8 +14,7 @@ namespace WebStore.Infrastructure.Interfaces
 
         void Clear();
 
-        CartViewModel TransformFromCart();
-        
-       // IEnumerable<CartProduct> GetCartProducts();
+        CartViewModel TransformFromCart();        
+       
     }
 }

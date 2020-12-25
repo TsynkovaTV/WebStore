@@ -34,7 +34,7 @@ namespace WebStore.Controllers
                        Id = p.Id,
                        Name = p.Name,
                        Price = p.Price,
-                       ImageUrl = p.ImageUrl
+                       ImageUrl = p.Image.Url
                    })
             });
         }

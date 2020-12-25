@@ -11,6 +11,7 @@ using WebStore.Data;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Services;
+using WebStore.Infrastructure.Services.Db;
 using WebStore.Infrastructure.Services.InCookies;
 
 namespace WebStore
@@ -67,6 +68,7 @@ namespace WebStore
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();            
             services.AddScoped<IProductData, InDbProductData>();
             services.AddScoped<ICartService, InCookiesCartService>();
+            services.AddScoped<IOrderService, InDbOrderService>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();            
         }
 

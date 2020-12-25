@@ -13,7 +13,7 @@ using WebStore.ViewModels;
 
 namespace WebStore.Infrastructure.Services
 {
-    [Obsolete("Корзина хранится не в БД, а в cookies")]
+    [Obsolete("Корзина хранится в cookies. Пользуйтесь InCookiesCartService")]
     public class InDbCartData : ICartService
     {
         private readonly WebStoreDbContext _db;

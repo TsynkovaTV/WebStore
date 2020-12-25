@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebStore.DAL.Context;
 
 namespace WebStore.DAL.Migrations
 {
     [DbContext(typeof(WebStoreDbContext))]
-    partial class WebStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201221193338_OrdersDateAndCountAdded")]
+    partial class OrdersDateAndCountAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,24 +260,6 @@ namespace WebStore.DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("WebStore.Domain.Entities.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("WebStore.Domain.Entities.Order.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -346,8 +330,9 @@ namespace WebStore.DAL.Migrations
                     b.Property<int?>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("int");
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -368,10 +353,6 @@ namespace WebStore.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
-
-                    b.HasIndex("ImageId")
-                        .IsUnique()
-                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.HasIndex("SectionId");
 
@@ -485,10 +466,6 @@ namespace WebStore.DAL.Migrations
                         .WithMany("Products")
                         .HasForeignKey("BrandId");
 
-                    b.HasOne("WebStore.Domain.Entities.Image", "Image")
-                        .WithOne("Product")
-                        .HasForeignKey("WebStore.Domain.Entities.Product", "ImageId");
-
                     b.HasOne("WebStore.Domain.Entities.Section", "Section")
                         .WithMany("Products")
                         .HasForeignKey("SectionId")
@@ -496,8 +473,6 @@ namespace WebStore.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Brand");
-
-                    b.Navigation("Image");
 
                     b.Navigation("Section");
                 });
@@ -514,11 +489,6 @@ namespace WebStore.DAL.Migrations
             modelBuilder.Entity("WebStore.Domain.Entities.Brand", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("WebStore.Domain.Entities.Image", b =>
-                {
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("WebStore.Domain.Entities.Order.Order", b =>
